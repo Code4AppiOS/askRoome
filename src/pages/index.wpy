@@ -1,0 +1,103 @@
+<style lang="less">
+.container {
+  height:  400rpx;
+  width: 100%;
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+    swiper {
+      height: 100%;
+    }
+    .slide-image {
+      width: 100%;
+    }
+  }
+  .arties-container {
+    width: 100%;
+    border-bottom: 1px solid #e2e2e2;
+    .arties {
+      background: #f2f2f2;
+      .arties-img {
+        width: 94%;
+        height: 300rpx;
+        margin: 20rpx 20rpx 0 20rpx;
+      }
+
+      .arties-tit {
+        font-size: 17px;
+        margin: 20rpx 20rpx 0rpx 20rpx;
+        padding-bottom: 10rpx;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }  
+    }
+    
+  }
+}
+
+</style>
+<template>
+  <view class="container">
+    <view class="swiper-container">
+      <swiper indicator-dots="{{indicatorDots}}"
+              autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{imgUrls}}">
+          <swiper-item>
+            <image src="{{item}}" class="slide-image"/>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <view class="recommended">热门推荐</view>
+    <view class="arties-container" wx:for="{{imgUrls}}">
+        <view class="arties" @tap="handleClick($index)">
+          <image class="arties-img" src="{{imgUrls[0]}}"></image>
+          <view class="arties-tit">
+            <div class="arties-tit-note">
+              <div class="arties-tit-img"></div>
+              <span>唐老师蜜语</span>
+            </div>
+            <view class="arties-detail">了解详情 ></view>
+          </view>
+        </view>
+    </view> 
+    
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import moduleA from 'module-a' // aliasFields ignore module example
+  import testMixin from '../mixins/test'
+
+  console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
+
+  export default class Index extends wepy.page {
+    data = {
+     imgUrls: [
+        'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+        'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+        'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      ],
+      indicatorDots: true,
+      autoplay: true,
+      interval: 3000,
+      duration: 1000
+    }
+
+    computed = {
+
+    }
+
+    methods = {
+      handleClick($index) {
+        wx.navigateTo({url: '/pages/detail'});
+      }
+    }
+
+    onLoad() {
+
+    }
+  }
+</script>

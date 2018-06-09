@@ -1,0 +1,144 @@
+<style lang="less">
+ .setting {
+  height: 100%;
+  width: 100%;
+  .setting-profile {
+    width: 100%;
+    height: 450rpx;
+    background-image: url('http://img3.redocn.com/tupian/20151022/weimeiziranfengjingtu_5164458.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .setting-profile-img {
+      background-image: url('https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=20995781,3368461619&fm=27&gp=0.jpg');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      border-radius: 50%;
+      height: 100px;
+      width: 100px;
+      margin: 0 auto;
+    }
+    .setting-profile-title {
+      color: #ffffff;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  }
+  .setting-list {
+    .setting-cell {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      border-bottom: 1px solid #e2e2e2;
+      padding: 15px;
+      height: 120rpx;
+      .setting-cell-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .setting-cell-content-main {
+          font-size: 20px;
+        }
+        .setting-cell-content-span {
+          color: gray;
+        }
+      }
+    }
+    .setting-cell-img {
+      width: 60rpx;
+      height: 60rpx;
+      position: relative;
+      top: 30%;
+    }
+  }
+ }
+</style>
+
+<template>
+  <view class="setting">
+    <view class="setting-profile">
+      <view>
+        <view class="setting-profile-img"></view>
+        <view class="setting-profile-title">{{'婚姻心理咨询专家（上海）刘老师'}}</view>
+      </view>
+    </view>
+    <view class="setting-list">
+      <view class="setting-cell" wx:for="{{cells}}" @tap="handleClick({{item}})">
+        <view class="setting-cell-content">
+          <span class="setting-cell-content-main">{{item.content}}</span>
+          <span class="setting-cell-content-span">{{item.span}}</span>
+        </view>
+        <image class="setting-cell-img" src="{{item.imgURL}}"/>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import moduleA from 'module-a' // aliasFields ignore module example
+  import testMixin from '../mixins/test'
+
+  console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
+
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '联系我们'
+    }
+    components = {
+     
+    }
+
+    mixins = [testMixin]
+
+    data = {
+      cells: [{content: '电话', span: '15989251689', imgURL: '../images/ico-phone.png'},
+      {content: '微信', span: 'lishikeng123', imgURL: '../images/ico-wechat.png'},
+      {content: '地址', span: '深圳市南山区南航公司', imgURL: '../images/ico-nva.png'}]
+    }
+
+    computed = {
+     
+    }
+
+    methods = {
+     handleClick(item) {
+      switch(item.content) {
+        case '电话':
+          wx.makePhoneCall({
+            phoneNumber: item.span
+          }) 
+        break;
+        case '微信': 
+        break;
+        case '地址':
+          wx.getLocation({
+            type: 'gcj02', //返回可以用于wx.openLocation的经纬度
+            success: function(res) {
+              var latitude = res.latitude
+              var longitude = res.longitude
+              wx.openLocation({
+                latitude: latitude,
+                longitude: longitude,
+                scale: 28
+              })
+            }
+          })
+        break;
+      }
+     }
+    }
+
+    events = {
+      
+    }
+
+    onLoad() {
+      
+    }
+  }
+</script>
